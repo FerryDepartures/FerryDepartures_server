@@ -13,4 +13,4 @@ If you have any features requests or other improvements to the project they are 
 
 ## ⚠️ License
 
-`Ferry Depatures` is free and open-source software licensed under the [MIT License](https://github.com/FerryDepartures/FerryDepartures_server/blob/master/LICENSE).
+`Ferry Departures` is free and open-source software licensed under the [MIT License](https://github.com/FerryDepartures/FerryDepartures_server/blob/master/LICENSE).
