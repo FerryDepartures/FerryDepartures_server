@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 
 //Routes import
-import apiRoutes from './routes/apiRoutes';
+import apiRoutes from './routes/api.routes';
 
 app.use('/api/', apiRoutes);
 
