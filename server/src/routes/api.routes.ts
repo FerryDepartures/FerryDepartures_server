@@ -48,7 +48,7 @@ router.get('/route/:routeID', async (req: Request, res: Response) => {
         }
 
         res.json({
-            routes: departures,
+            departures: departures,
             error: '',
             status: 'success',
         });
