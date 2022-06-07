@@ -9,7 +9,7 @@ import cors from 'cors';
 const log: Logger = new Logger();
 
 //Configuring dotenv
-if (process.env.NODE_ENV === 'development') dotenv.config();
+dotenv.config();
 
 //Variable Declarations
 const port = process.env.PORT || 3000;
