@@ -2,7 +2,7 @@
 import { Request, Response, Router } from 'express';
 
 //Local Dependencies Import
-import { getAllRoutes, getDepartures, getDeparturesByName } from '../ferryRoutes';
+import { getAllRoutes, getRoute, getDepartures, getDeparturesByName } from '../ferryRoutes';
 
 //Variable Declarations
 const router = Router();
@@ -16,6 +16,20 @@ const router = Router();
 router.get('/routes', async (req: Request, res: Response) => {
     res.json({
         routes: await getAllRoutes(),
+        error: '',
+        status: 'success',
+    });
+});
+
+/**
+ * @get/route: /api/routes/:name
+ * @desc: This route retrieves a specific route from Trafikverket's API
+ * @access: Public
+ * @return: JSON
+ */
+router.get('/routes/:name', async (req: Request, res: Response) => {
+    res.json({
+        route: await getRoute(req.params.name),
         error: '',
         status: 'success',
     });

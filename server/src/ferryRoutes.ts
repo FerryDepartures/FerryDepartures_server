@@ -35,6 +35,17 @@ export async function getAllRoutes() {
 }
 
 /**
+ * @name getRoute
+ * @description Retrieves all routes from Trafikverket's API
+ */
+export async function getRoute(name: string) {
+    const routes = await getAllRoutes();
+    const route = routes.find((route: iRoute) => route.Name.toLowerCase() === name.toLowerCase());
+
+    return route;
+}
+
+/**
  * @name getDepartures
  * @description Retrieves departures from Trafikverket's API
  */
