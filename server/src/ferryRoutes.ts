@@ -62,3 +62,32 @@ export async function getDepartures(routeId: string) {
     );
     return (await request.data)['RESPONSE']['RESULT'][0]['FerryAnnouncement'];
 }
+
+/**
+ * @name getDeparturesByName
+ * @description Retrieves departures from Trafikverket's API
+ */
+export async function getDeparturesByName(routeName: string) {
+    const date = new Date();
+    const date24h = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+
+    const request = await axios.post(
+        'https://api.trafikinfo.trafikverket.se/v2/data.json',
+        `
+        <REQUEST>
+            <LOGIN authenticationkey="96c58a7582f14b9b8f232e8bcf1b96e1" />
+            <QUERY objecttype="FerryAnnouncement" schemaversion="1.2" orderby="DepartureTime">
+                <FILTER>
+                    <EQ name="Route.Name" value="${routeName}" />
+                    <GT name="DepartureTime" value="${date.toISOString()}" />
+                    <LT name="DepartureTime" value="${date24h.toISOString()}" />
+                </FILTER>
+            </QUERY>
+        </REQUEST>
+        `,
+        {
+            headers: { 'Content-Type': 'text/plain' },
+        },
+    );
+    return (await request.data)['RESPONSE']['RESULT'][0]['FerryAnnouncement'];
+}

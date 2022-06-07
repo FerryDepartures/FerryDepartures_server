@@ -2,7 +2,7 @@
 import { Request, Response, Router } from 'express';
 
 //Local Dependencies Import
-import { getAllRoutes, getDepartures } from '../ferryRoutes';
+import { getAllRoutes, getDepartures, getDeparturesByName } from '../ferryRoutes';
 
 //Variable Declarations
 const router = Router();
@@ -19,6 +19,46 @@ router.get('/routes', async (req: Request, res: Response) => {
         error: '',
         status: 'success',
     });
+});
+
+/**
+ * @get/route: /api/route/:routeName
+ * @desc: This route retrieves all departues  from Trafikverket's API
+ * @access: Public
+ * @return: JSON
+ */
+router.get('/route/name/:routeName', async (req: Request, res: Response) => {
+    console.log(req.params.routeName);
+    if (!req.params.routeName) {
+        return res.json({
+            departures: '',
+            error: 'Missing routeName',
+            status: 'error',
+        });
+    }
+
+    try {
+        const departures = await getDeparturesByName(req.params.routeName);
+
+        if (departures.length <= 0) {
+            return res.status(404).json({
+                departures: [],
+                error: 'No departures found',
+                status: 'error',
+            });
+        }
+
+        res.json({
+            departures: departures,
+            error: '',
+            status: 'success',
+        });
+    } catch {
+        res.status(400).json({
+            error: 'Invalid routeName',
+            status: 'error',
+        });
+    }
 });
 
 /**
